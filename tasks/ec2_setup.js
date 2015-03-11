@@ -54,6 +54,7 @@ module.exports = function (grunt) {
                 excludes: ['*']
             }
         }), [ // node.js
+            'sudo apt-get update --fix-missing',
             'sudo apt-get install python-software-properties',
             'sudo add-apt-repository ppa:chris-lea/node.js -y',
             'sudo apt-get update',
