@@ -4,7 +4,7 @@ var _ = require('lodash');
 var util = require('util');
 var conf = require('./conf.js');
 var parse = require('./parse.js');
-var running = '[[ $(pm2 jlist) != "[]" ]]';
+var running = '[[ $(sudo pm2 jlist) != "[]" ]]';
 
 module.exports = {
     pm2_reload: function () {
