@@ -32,7 +32,7 @@ module.exports = function (grunt) {
             SubnetId: conf('AWS_SUBNET_ID')
         };
         var cmd;
-        if (params.SecurityGroups.length) {
+        if (params.SecurityGroups[0]) {
           delete params.SecurityGroupIds;
           delete params.SubnetId;
           cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s';
