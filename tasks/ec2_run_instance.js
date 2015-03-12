@@ -4,6 +4,7 @@ var util = require('util');
 var chalk = require('chalk');
 var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
+var workflow = require('./lib/workflow.js');
 
 module.exports = function (grunt) {
 
@@ -26,10 +27,11 @@ module.exports = function (grunt) {
             MinCount: 1,
             MaxCount: 1,
             KeyName: name,
-            SecurityGroups: [conf('AWS_SECURITY_GROUP')]
+            SecurityGroups: workflow.if_has('AWS_SECURITY_GROUP', ['--security-groups', conf('AWS_SECURITY_GROUP')]),
+            SecurityGroupIds: workflow.if_has('AWS_SECURITY_GROUP_ID', ['--security-group-ids', conf('AWS_SECURITY_GROUP_ID')])
         };
-        var cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s';
-        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups[0]);
+        var cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s %s %s';
+        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups.join(' '), params.SecurityGroupIds.join(' '));
         aws.ec2.runInstances(params, aws.capture(next));
 
         function next (result) {
