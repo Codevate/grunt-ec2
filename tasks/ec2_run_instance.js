@@ -25,6 +25,7 @@ module.exports = function (grunt) {
             ImageId: ['--image-id', conf('AWS_IMAGE_ID')].join(' '),
             InstanceType: ['--instance-type', conf('AWS_INSTANCE_TYPE')].join(' '),
             MinCount: ['--count', 1].join(' '),
+            MaxCount: 1,
             KeyName: ['--key-name', name].join(' '),
             SecurityGroups: workflow.if_has('AWS_SECURITY_GROUP', ['--security-groups', conf('AWS_SECURITY_GROUP')]).join(' '),
             SecurityGroupIds: workflow.if_has('AWS_SECURITY_GROUP_ID', ['--security-group-ids', conf('AWS_SECURITY_GROUP_ID')]).join(' '),
