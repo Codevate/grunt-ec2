@@ -22,17 +22,16 @@ module.exports = function (grunt) {
 
         var done = this.async();
         var params = {
-            ImageId: ['--image-id', conf('AWS_IMAGE_ID')].join(' '),
-            InstanceType: ['--instance-type', conf('AWS_INSTANCE_TYPE')].join(' '),
-            MinCount: ['--count', 1].join(' '),
+            ImageId: conf('AWS_IMAGE_ID'),
+            InstanceType: conf('AWS_INSTANCE_TYPE'),
+            MinCount: 1,
             MaxCount: 1,
-            KeyName: ['--key-name', name].join(' '),
-            SecurityGroups: workflow.if_has('AWS_SECURITY_GROUP', ['--security-groups', conf('AWS_SECURITY_GROUP')]).join(' '),
-            SecurityGroupIds: workflow.if_has('AWS_SECURITY_GROUP_ID', ['--security-group-ids', conf('AWS_SECURITY_GROUP_ID')]).join(' '),
-            SubnetId: workflow.if_has('AWS_SUBNET_ID', ['--subnet-id', conf('AWS_SUBNET_ID')]).join(' ')
+            KeyName: name,
+            SecurityGroups: workflow.if_has('AWS_SECURITY_GROUP', ['--security-groups', conf('AWS_SECURITY_GROUP')]),
+            SecurityGroupIds: workflow.if_has('AWS_SECURITY_GROUP_ID', ['--security-group-ids', conf('AWS_SECURITY_GROUP_ID')])
         };
-        var cmd = 'ec2 run-instances %s %s %s %s %s %s %s';
-        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups, params.SecurityGroupIds, params.SubnetId);
+        var cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s %s %s';
+        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups.join(' '), params.SecurityGroupIds.join(' '));
         aws.ec2.runInstances(params, aws.capture(next));
 
         function next (result) {
