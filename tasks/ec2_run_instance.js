@@ -27,11 +27,21 @@ module.exports = function (grunt) {
             MinCount: 1,
             MaxCount: 1,
             KeyName: name,
-            SecurityGroups: workflow.if_has('AWS_SECURITY_GROUP', ['--security-groups', conf('AWS_SECURITY_GROUP')]),
-            SecurityGroupIds: workflow.if_has('AWS_SECURITY_GROUP_ID', ['--security-group-ids', conf('AWS_SECURITY_GROUP_ID')])
+            SecurityGroups: [conf('AWS_SECURITY_GROUP')],
+            SecurityGroupIds: [conf('AWS_SECURITY_GROUP_ID')],
+            SubnetId: conf('AWS_SUBNET_ID')
         };
-        var cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s %s %s';
-        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups.join(' '), params.SecurityGroupIds.join(' '));
+        var cmd;
+        if (params.SecurityGroups.length) {
+          delete params.SecurityGroupIds;
+          delete params.SubnetId;
+          cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s';
+          aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups[0]);
+        } else {
+          delete params.SecurityGroups;
+          cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-group-ids %s --subnet-id %s';
+          aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroupIds[0], params.SubnetId);
+        }
         aws.ec2.runInstances(params, aws.capture(next));
 
         function next (result) {
