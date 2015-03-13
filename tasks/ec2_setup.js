@@ -64,7 +64,8 @@ module.exports = function (grunt) {
             'sudo apt-get install -y make g++',
             'sudo npm install -g pm2 --unsafe-perm',
             'sudo pm2 startup ubuntu'
-        ]];
+        ], conf('AWS_POST_SETUP') // post setup commands
+        ];
 
         function forwardPort(from, to) {
             return [
