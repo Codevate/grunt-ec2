@@ -58,8 +58,8 @@ module.exports = function (grunt) {
             'sudo apt-get install -y python-software-properties build-essential',
             'curl -sL https://deb.nodesource.com/setup | sudo bash -',
             'sudo apt-get update',
-            'sudo apt-get install -y nodejs nodejs-legacy',
-            'sudo apt-get install -y libpq-devy'
+            'sudo apt-get install -y nodejs',
+            'sudo apt-get install -y libpq-dev'
         ], [ // pm2
             'sudo apt-get install -y make g++',
             'sudo npm install -g pm2 --unsafe-perm',
