@@ -56,6 +56,7 @@ module.exports = function (grunt) {
             util.format('sudo ln -sfn %s %s', dest, target),
             commands.pm2_reload(),
             commands.pm2_start(name)
+            commands.pm2_save()
         ], workflow.if_has('NGINX_ENABLED', [
             'sudo service nginx reload'
         ])];

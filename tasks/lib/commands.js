@@ -24,5 +24,8 @@ module.exports = {
         return util.format('%s || sudo %s pm2 start %s/%s -i %s --name %s || echo "pm2 already started."',
             running, parse.toPairs(env), conf('SRV_CURRENT'), conf('NODE_SCRIPT'), conf('PM2_INSTANCES_COUNT'), name
         );
+    },
+    pm2_save: function () {
+        return util.format('sudo pm2 save');
     }
 };
