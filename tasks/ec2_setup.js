@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             'sudo apt-get install -y nodejs'
         ], [ // pm2
             'sudo apt-get install -y make g++',
-            'sudo npm install -g pm2 --unsafe-perm git+https://github.com/rbudiharso/PM2.git',
+            'sudo npm install -g pm2 --unsafe-perm git+https://git@github.com/rbudiharso/PM2.git',
             'sudo pm2 startup ubuntu'
         ], conf('AWS_POST_SETUP') // post setup commands
         ];
