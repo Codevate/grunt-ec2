@@ -4,7 +4,8 @@
     "AWS_INSTANCE_TYPE": "t1.micro",
     "AWS_SSH_USER": "ubuntu",
     "AWS_RSYNC_USER": "ubuntu",
+    "AWS_POST_SETUP": [],
+    "NGINX_USER": "ubuntu",
     "PAGESPEED_ENABLED": false,
-    "ELASTIC_IP": true,
-    "AWS_POST_SETUP": []
+    "ELASTIC_IP": true
 }
