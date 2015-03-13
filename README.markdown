@@ -70,16 +70,10 @@ Variable Name|Purpose
 `"AWS_INSTANCE_TYPE"`|The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
 `"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
 `"AWS_SECURITY_GROUP"`|The security group used for new instances. You'll have to create this one yourself.
-`"AWS_SECURITY_GROUP_ID"`|The security group id used for the new
-instance. Use this if you're not using default VPC. DO
-NOT use `AWS_SECURITY_GROUP` AND don't forget to
-configure `AWS_SUBNET_ID` if you're using this.
-`"AWS_SUBNET_ID"`|Use this Subnet ID for the new instance, MUST be used
-along with `AWS_SECURITY_GROUP_ID`. Currently this is ignored when
-you're using `AWS_SECURITY_GROUP`.
+`"AWS_SECURITY_GROUP_ID"`|The security group id used for the new instance. Use this if you're not using default VPC. DO NOT use `AWS_SECURITY_GROUP` AND don't forget to configure `AWS_SUBNET_ID` if you're using this.
+`"AWS_SUBNET_ID"`|Use this Subnet ID for the new instance, MUST be used along with `AWS_SECURITY_GROUP_ID`. Currently this is ignored when you're using `AWS_SECURITY_GROUP`.
 `"AWS_SSH_USER"`|The user used to SSH into the instance when setting it up for the first time, after creating it.
-`"AWS_POST_SETUP"`|Array of additional commands to run after the instance has been
-setup, don't forget to use `sudo` if you need to, default to `[]`.
+`"AWS_POST_SETUP"`|Array of additional commands to run after the instance has been setup, don't forget to use `sudo` if you need to, default to `[]`.
 `"ELASTIC_IP"`|Assign an AWS Elastic IP to new instances, and release it when terminating them. Defaults to `true`.
 `"ENV"`| Provided as a JSON object. Variables to set in the local environment before the app starts. Useful for setting up DB credentials for example.
 `"NGINX_ENABLED"`|Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
