@@ -55,13 +55,13 @@ module.exports = function (grunt) {
             }
         }), [ // node.js
             'sudo apt-get update --fix-missing',
-            'sudo apt-get install -y python-software-properties build-essential git-core',
+            'sudo apt-get install -y python-software-properties build-essential',
             'curl -sL https://deb.nodesource.com/setup | sudo bash -',
             'sudo apt-get update',
             'sudo apt-get install -y nodejs'
         ], [ // pm2
             'sudo apt-get install -y make g++',
-            'sudo npm install -g pm2 --unsafe-perm git+https://git@github.com/rbudiharso/PM2.git',
+            'sudo npm install -g pm2 --unsafe-perm',
             'sudo pm2 startup ubuntu'
         ], conf('AWS_POST_SETUP') // post setup commands
         ];
