@@ -55,13 +55,13 @@ module.exports = function (grunt) {
             }
         }), [ // node.js
             'sudo apt-get update --fix-missing',
-            'sudo apt-get install python-software-properties',
-            'sudo add-apt-repository ppa:chris-lea/node.js -y',
+            'sudo apt-get install -y python-software-properties build-essential',
+            'curl -sL https://deb.nodesource.com/setup | sudo bash -',
             'sudo apt-get update',
-            'sudo apt-get install nodejs -y',
-            'sudo apt-get install libpq-dev -y'
+            'sudo apt-get install -y nodejs nodejs-legacy',
+            'sudo apt-get install -y libpq-devy'
         ], [ // pm2
-            'sudo apt-get install make g++ -y',
+            'sudo apt-get install -y make g++',
             'sudo npm install -g pm2 --unsafe-perm',
             'sudo pm2 startup ubuntu'
         ]];
