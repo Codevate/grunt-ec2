@@ -12,12 +12,13 @@ module.exports = {
     },
     pm2_start: function (name) {
         var defaults = {
-            NODE_ENV: name
+            NODE_ENV: name,
+            PORT: conf('NGINX_PROXY_PORT')
         };
         var user = conf('ENV');
         var env = {};
 
-        // user can override NODE_ENV if need be
+        // user can override NODE_ENV and PORT if need be
         _.assign(env, defaults, user);
 
         return util.format('%s || sudo %s pm2 start %s/%s -i %s --name %s || echo "pm2 already started."',
