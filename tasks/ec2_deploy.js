@@ -47,13 +47,13 @@ module.exports = function (grunt) {
         var steps = [{
             rsync: rsync
         }, [
-            util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions)
+            util.format('rm -rf `ls -t %s | tail -n +11`', versions)
         ], workflow.if_not('NPM_INSTALL_DISABLED', [
             util.format('npm --prefix %s install --production --loglevel %s', dest, verbosity)
         ]), workflow.if_has('NPM_REBUILD', [
             'npm rebuild'
         ]), [
-            util.format('sudo ln -sfn %s %s', dest, target),
+            util.format('ln -sfn %s %s', dest, target),
             commands.pm2_reload(),
             commands.pm2_start(name),
             commands.pm2_save()
