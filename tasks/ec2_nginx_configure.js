@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
             return [
                 util.format('sudo touch %s', remote),
-                util.format('sudo chown ubuntu %s', remote),
+                util.format('sudo chown -R ubuntu %s', conf('SRV_ROOT')),
                 util.format('sudo ln -sfn %s /etc/nginx/%s.conf', remote, where),
                 util.format('echo "%s" > %s', escaped, remote)
             ];
