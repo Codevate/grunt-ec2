@@ -36,10 +36,11 @@ module.exports = function (grunt) {
             forwardPort(443, 8433)
         ), [ // rsync
             util.format('sudo mkdir -p %s', versions),
+            util.format('sudo chown -R ubuntu %s', versions),
             util.format('sudo mkdir -p %s', cert),
-            util.format('sudo chown ubuntu %s', cert),
+            util.format('sudo chown -R ubuntu %s', cert),
             util.format('sudo mkdir -p %s', latest),
-            util.format('sudo chown ubuntu %s', latest)
+            util.format('sudo chown -R ubuntu %s', latest)
         ], workflow.if_has('SSL_ENABLED', { // send certificates
             rsync: {
                 name: 'cert',
@@ -62,16 +63,19 @@ module.exports = function (grunt) {
         ], [ // pm2
             'sudo apt-get install -y make g++',
             'sudo npm install -g pm2 --unsafe-perm',
-            'sudo pm2 startup ubuntu'
+            'sudo pm2 startup ubuntu -u ubuntu',
+            'sudo chown -R ubuntu /home/ubuntu/.pm2',
+            'sudo chown -R ubuntu /home/ubuntu/.npm'
         ], conf('AWS_POST_SETUP') // post setup commands
         ];
 
         function forwardPort(from, to) {
             return [
+                'sudo DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent',
                 util.format('sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport %s -j REDIRECT --to-port %s', from, to),
                 util.format('sudo iptables -A INPUT -p tcp -m tcp --sport %s -j ACCEPT', from),
                 util.format('sudo iptables -A OUTPUT -p tcp -m tcp --dport %s -j ACCEPT', from),
-                'sudo iptables-save'
+                'sudo su - root -c "iptables-save > /etc/iptables/rules.v4"'
             ];
         }
 
