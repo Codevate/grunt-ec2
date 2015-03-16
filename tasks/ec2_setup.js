@@ -65,7 +65,13 @@ module.exports = function (grunt) {
             'sudo npm install -g pm2 --unsafe-perm',
             'sudo pm2 startup ubuntu -u ubuntu',
             'sudo chown -R ubuntu /home/ubuntu/.pm2',
-            'sudo chown -R ubuntu /home/ubuntu/.npm'
+            'sudo chown -R ubuntu /home/ubuntu/.npm',
+            util.format('sudo mkdir -p %s', versions),
+            util.format('sudo chown -R ubuntu %s', versions),
+            util.format('sudo mkdir -p %s', cert),
+            util.format('sudo chown -R ubuntu %s', cert),
+            util.format('sudo mkdir -p %s', latest),
+            util.format('sudo chown -R ubuntu %s', latest)
         ], conf('AWS_POST_SETUP') // post setup commands
         ];
 
