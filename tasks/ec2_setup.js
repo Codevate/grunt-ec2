@@ -30,11 +30,7 @@ module.exports = function (grunt) {
             'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
             'sudo cp /tmp/sysctl.conf /etc/',
             'sudo sysctl -p /etc/sysctl.conf'
-        ], [ // forward port 80
-            forwardPort(80, 8080)
-        ], workflow.if_has('SSL_ENABLED', // forward port 443
-            forwardPort(443, 8433)
-        ), [ // rsync
+        ], [ // rsync
             util.format('sudo mkdir -p %s', versions),
             util.format('sudo chown -R ubuntu %s', versions),
             util.format('sudo mkdir -p %s', cert),

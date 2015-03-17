@@ -54,6 +54,7 @@ module.exports = function (grunt) {
                 ]),
                 nginxTemplate('http', 'nginx'),
                 nginxTemplate('server', 'sites-enabled/' + project),
+                'sudo rm /etc/nginx/sites-enabled/default',
                 'sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'
             ];
         }

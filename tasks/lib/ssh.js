@@ -24,6 +24,7 @@ function prepare (options, ready, done) {
             grunt.fatal('This instance is refusing SSH connections for now');
         }
 
+        credentials.readyTimeout = 50000;
         c.connect(credentials);
     });
 
