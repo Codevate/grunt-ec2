@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
 var util = require('util');
 var chalk = require('chalk');
 var conf = require('./lib/conf.js');
@@ -25,11 +27,6 @@ module.exports = function (grunt) {
         var versions = conf('SRV_VERSIONS');
         var steps = [[
             util.format('echo "configuring up %s instance..."', name)
-        ], [ // enable forwarding
-            'cp /etc/sysctl.conf /tmp/',
-            'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
-            'sudo cp /tmp/sysctl.conf /etc/',
-            'sudo sysctl -p /etc/sysctl.conf'
         ], [ // rsync
             util.format('sudo mkdir -p %s', versions),
             util.format('sudo chown -R ubuntu %s', versions),
@@ -54,26 +51,15 @@ module.exports = function (grunt) {
             'sudo apt-get update --fix-missing',
             'sudo apt-get install -y python-software-properties build-essential',
             'curl -sL https://deb.nodesource.com/setup | sudo bash -',
-            'sudo apt-get update',
             'sudo apt-get install -y nodejs'
         ], [ // pm2
             'sudo apt-get install -y make g++',
-            'sudo npm install -g pm2 --unsafe-perm',
+            'sudo npm install -g rbudiharso/PM2 --unsafe-perm',
             'sudo pm2 startup ubuntu -u ubuntu',
             'sudo chown -R ubuntu /home/ubuntu/.pm2',
             'sudo chown -R ubuntu /home/ubuntu/.npm',
         ], conf('AWS_POST_SETUP') // post setup commands
         ];
-
-        function forwardPort(from, to) {
-            return [
-                'sudo DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent',
-                util.format('sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport %s -j REDIRECT --to-port %s', from, to),
-                util.format('sudo iptables -A INPUT -p tcp -m tcp --sport %s -j ACCEPT', from),
-                util.format('sudo iptables -A OUTPUT -p tcp -m tcp --dport %s -j ACCEPT', from),
-                'sudo su - root -c "iptables-save > /etc/iptables/rules.v4"'
-            ];
-        }
 
         workflow(steps, { name: name }, next);
 
