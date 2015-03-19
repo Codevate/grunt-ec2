@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         }), [ // node.js
             'sudo apt-get update --fix-missing',
             'sudo apt-get install -y python-software-properties build-essential git-core',
-            'curl -sL https://deb.nodesource.com/setup | sudo bash -',
+            'curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -',
             'sudo apt-get install -y nodejs',
             'curl -sL https://npmjs.org/install.sh | sudo bash -'
         ], [ // pm2
