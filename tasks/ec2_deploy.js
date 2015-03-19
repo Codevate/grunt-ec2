@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         ]), workflow.if_has('NPM_REBUILD', [
             'npm rebuild'
         ]), [
-            util.format('chown -R %s /home/%s/.pm2', conf('AWS_SSH_USER'), conf('AWS_SSH_USER')),
+            util.format('sudo chown -R %s /home/%s/.pm2', conf('AWS_SSH_USER'), conf('AWS_SSH_USER')),
             util.format('ln -sfn %s %s', dest, target),
             commands.pm2_reload(),
             commands.pm2_start(name),
