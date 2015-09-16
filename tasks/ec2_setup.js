@@ -55,7 +55,7 @@ module.exports = function (grunt) {
             'curl -sL https://npmjs.org/install.sh | sudo bash -'
         ], [ // pm2
             'sudo apt-get install -y make g++',
-            'sudo npm install -g rbudiharso/PM2 --unsafe-perm',
+            'sudo npm install -g pm2 --unsafe-perm',
             'sudo pm2 startup ubuntu -u ubuntu',
             'sudo chown -R ubuntu /home/ubuntu/.pm2',
             'sudo chown -R ubuntu /home/ubuntu/.npm',
